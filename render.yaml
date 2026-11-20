@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: uptime-watch
+    runtime: python
+    plan: starter
+    buildCommand: pip install -r requirements.txt
+    startCommand: python server.py
+    healthCheckPath: /api/health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.8
+      - key: API_KEY
+        generateValue: true
+      - key: DATA_FILE
+        value: /var/data/monitors.json
+    disk:
+      name: uptime-data
+      mountPath: /var/data
+      sizeGB: 1
